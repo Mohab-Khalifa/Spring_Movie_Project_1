@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,7 +52,7 @@ public class MovieController {
 		return ResponseEntity.ok(movieService.getMovieReviews(movieId));
 	}
 
-	//
+	// Create - create a movie to add
 	@PostMapping
 	public ResponseEntity<MovieDTO> createMovie(@Valid @RequestBody NewMovieDTO movie) {
 		MovieDTO newMovie = movieService.createMovie(movie);
@@ -60,6 +61,14 @@ public class MovieController {
 		headers.add("Location", "http://localhost:8080/movie/" + newMovie.getId());
 
 		return new ResponseEntity<>(newMovie, headers, HttpStatus.CREATED);
+	}
+
+	// Update - update a movie by it's Id
+	@PutMapping(path = "/{id}")
+	public ResponseEntity<MovieDTO> updateMovie(@RequestBody NewMovieDTO newMovieDTO,
+			@PathVariable(name = "id") int id) {
+		MovieDTO movieChange = this.movieService.updateMovie(newMovieDTO, id);
+		return new ResponseEntity<MovieDTO>(movieChange, HttpStatus.ACCEPTED);
 	}
 
 }
