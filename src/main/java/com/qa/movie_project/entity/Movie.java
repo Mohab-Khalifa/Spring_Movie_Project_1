@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-import com.qa.movie_project.entity.Review;
 
 @Entity
 @Table(name = "movie")
@@ -34,6 +34,9 @@ public class Movie {
 
 	@NotNull
 	private int runtime;
+
+	@OneToMany(mappedBy = "movie", targetEntity = Review.class, fetch = FetchType.LAZY)
+	private List<Review> reviews;
 
 	public Movie() {
 		super();
