@@ -2,6 +2,9 @@ package com.qa.movie_project.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.EntityNotFoundException;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +41,14 @@ public class MovieService {
 			DTOs.add(this.toDTO(movie));
 		}
 		return DTOs;
+	}
+
+	public MovieDTO getMovie(int id) {
+		Optional<Movie> movie = movieRepo.findById(id);
+
+		if (movie.isPresent()) {
+			return this.toDTO(movie.get());
+		}
+		throw new EntityNotFoundException("Movie not found with id " + id);
 	}
 }
