@@ -25,4 +25,44 @@ public class ReviewDTO {
 		this.comment = comment;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public MovieDTO getMovieDTO() {
+		return movieDTO;
+	}
+
+	public void setMovieDTO(MovieDTO movieDTO) {
+		this.movieDTO = movieDTO;
+	}
+
+	public LocalDate getPostedAt() {
+		return postedAt;
+	}
+
+	public void setPostedAt(LocalDate postedAt) {
+		this.postedAt = postedAt;
+	}
+
 }
