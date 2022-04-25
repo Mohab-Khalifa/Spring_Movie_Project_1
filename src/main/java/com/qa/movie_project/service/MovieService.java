@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.qa.movie_project.dto.MovieDTO;
 import com.qa.movie_project.dto.NewMovieDTO;
+import com.qa.movie_project.dto.ReviewDTO;
 import com.qa.movie_project.entity.Movie;
 import com.qa.movie_project.repo.MovieRepo;
 
@@ -80,5 +81,12 @@ public class MovieService {
 			return !this.movieRepo.existsById(id);
 		}
 		throw new EntityNotFoundException("Movie not found with id " + id);
+	}
+
+	public List<ReviewDTO> getMovieReviews(int movieId) {
+		MovieDTO movie = this.getMovie(movieId);
+		List<ReviewDTO> reviews = reviewService.getReviewsByMovieId(movieId);
+		reviews.forEach(review -> review.setMovieDTO(movie));
+		return reviews;
 	}
 }
