@@ -2,6 +2,7 @@ package com.qa.movie_project.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -104,6 +105,30 @@ public class Movie {
 
 	public void setReviews(List<Review> reviews) {
 		this.reviews = reviews;
+	}
+
+	@Override
+	public String toString() {
+		return "Movie [id=" + id + ", title=" + title + ", genre=" + genre + ", releaseYear=" + releaseYear
+				+ ", runtime=" + runtime + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(genre, id, releaseYear, runtime, title);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Movie other = (Movie) obj;
+		return Objects.equals(genre, other.genre) && id == other.id && Objects.equals(releaseYear, other.releaseYear)
+				&& runtime == other.runtime && Objects.equals(title, other.title);
 	}
 
 }
