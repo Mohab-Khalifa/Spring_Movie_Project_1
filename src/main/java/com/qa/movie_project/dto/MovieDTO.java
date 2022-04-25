@@ -20,4 +20,25 @@ public class MovieDTO {
 	@NotNull
 	private int runtime;
 
+	public MovieDTO() {
+		super();
+	}
+
+	public MovieDTO(int id, String title, String genre, Integer releaseYear, int runtime) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.genre = genre;
+		this.releaseYear = releaseYear;
+		this.runtime = runtime;
+	}
+
+	public MovieDTO(String title, String genre, Integer releaseYear, int runtime) {
+		super();
+		this.title = title;
+		this.genre = genre;
+		this.releaseYear = releaseYear;
+		this.runtime = runtime;
+	}
+
 }
