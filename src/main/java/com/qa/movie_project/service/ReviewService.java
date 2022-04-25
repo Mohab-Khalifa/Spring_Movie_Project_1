@@ -76,4 +76,12 @@ public class ReviewService {
 		throw new EntityNotFoundException("Review not found with id " + id);
 	}
 
+	public void deleteReview(int id) {
+		if (reviewRepo.existsById(id)) {
+			reviewRepo.deleteById(id);
+			return;
+		}
+		throw new EntityNotFoundException("Review not found with id " + id);
+	}
+
 }
