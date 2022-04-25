@@ -4,6 +4,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.qa.movie_project.dto.MovieDTO;
+import com.qa.movie_project.entity.Movie;
 import com.qa.movie_project.repo.MovieRepo;
 
 @Service
@@ -19,5 +21,9 @@ public class MovieService {
 		this.movieRepo = movieRepo;
 		this.reviewService = reviewService;
 		this.modelMapper = modelMapper;
+	}
+
+	private MovieDTO toDTO(Movie movie) {
+		return modelMapper.map(movie, MovieDTO.class);
 	}
 }
