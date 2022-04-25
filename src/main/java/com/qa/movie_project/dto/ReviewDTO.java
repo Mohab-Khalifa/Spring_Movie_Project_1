@@ -14,4 +14,15 @@ public class ReviewDTO {
 
 	private LocalDate postedAt;
 
+	public ReviewDTO() {
+
+	}
+
+	public ReviewDTO(int id, int rating, String comment) {
+		super();
+		this.id = id;
+		this.rating = rating;
+		this.comment = comment;
+	}
+
 }
