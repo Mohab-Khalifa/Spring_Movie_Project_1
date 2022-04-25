@@ -1,5 +1,8 @@
 package com.qa.movie_project.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,5 +28,15 @@ public class MovieService {
 
 	private MovieDTO toDTO(Movie movie) {
 		return modelMapper.map(movie, MovieDTO.class);
+	}
+
+	public List<MovieDTO> getMovies() {
+		List<Movie> movies = movieRepo.findAll();
+		List<MovieDTO> DTOs = new ArrayList<>();
+
+		for (Movie movie : movies) {
+			DTOs.add(this.toDTO(movie));
+		}
+		return DTOs;
 	}
 }
