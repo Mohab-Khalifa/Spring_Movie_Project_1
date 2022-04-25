@@ -18,4 +18,16 @@ public class NewMovieDTO {
 	@NotNull
 	private int runtime;
 
+	public NewMovieDTO() {
+		super();
+	}
+
+	public NewMovieDTO(String title, String genre, Integer releaseYear, int runtime) {
+		super();
+		this.title = title;
+		this.genre = genre;
+		this.releaseYear = releaseYear;
+		this.runtime = runtime;
+	}
+
 }
