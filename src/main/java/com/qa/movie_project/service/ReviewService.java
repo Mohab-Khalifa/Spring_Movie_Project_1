@@ -35,4 +35,14 @@ public class ReviewService {
 		}
 		return dtos;
 	}
+
+	public List<ReviewDTO> getReviewsByMovieId(int id) {
+		List<Review> reviews = reviewRepo.findByMovieId(id);
+		List<ReviewDTO> dtos = new ArrayList<>();
+
+		for (Review review : reviews) {
+			dtos.add(this.toDTO(review));
+		}
+		return dtos;
+	}
 }
