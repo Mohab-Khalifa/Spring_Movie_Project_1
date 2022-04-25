@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.qa.intro_project.entity.Review;
+import com.qa.movie_project.entity.Review;
 
 @Entity
 @Table(name = "movie")
