@@ -1,6 +1,7 @@
 package com.qa.movie_project.entity;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -98,6 +99,29 @@ public class Review {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	@Override
+	public String toString() {
+		return "Review [id=" + id + ", rating=" + rating + ", comment=" + comment + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(comment, id, movie, postedAt, rating);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Review other = (Review) obj;
+		return Objects.equals(comment, other.comment) && id == other.id && Objects.equals(movie, other.movie)
+				&& Objects.equals(postedAt, other.postedAt) && Objects.equals(rating, other.rating);
 	}
 
 }
