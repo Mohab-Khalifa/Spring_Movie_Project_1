@@ -2,6 +2,9 @@ package com.qa.movie_project.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.EntityNotFoundException;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -45,4 +48,14 @@ public class ReviewService {
 		}
 		return dtos;
 	}
+
+	public ReviewDTO getReview(int id) {
+		Optional<Review> review = reviewRepo.findById(id);
+
+		if (review.isPresent()) {
+			return this.toDTO(review.get());
+		}
+		throw new EntityNotFoundException("Review not found with id " + id);
+	}
+
 }
