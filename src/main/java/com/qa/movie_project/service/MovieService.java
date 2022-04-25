@@ -58,4 +58,19 @@ public class MovieService {
 		Movie newMovie = movieRepo.save(toSave);
 		return this.toDTO(newMovie);
 	}
+
+	public MovieDTO updateMovie(NewMovieDTO movie, int id) {
+		if (movieRepo.existsById(id)) {
+			Movie savedMovie = movieRepo.getById(id);
+			savedMovie.setTitle(movie.getTitle());
+			savedMovie.setGenre(movie.getGenre());
+			savedMovie.setReleaseYear(movie.getReleaseYear());
+			savedMovie.setRuntime(movie.getRuntime());
+
+			movieRepo.save(savedMovie);
+
+			return this.toDTO(savedMovie);
+		}
+		throw new EntityNotFoundException("Movie not found with id " + id);
+	}
 }
