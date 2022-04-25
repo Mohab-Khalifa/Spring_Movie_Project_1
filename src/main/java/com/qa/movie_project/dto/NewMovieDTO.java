@@ -1,5 +1,7 @@
 package com.qa.movie_project.dto;
 
+import java.util.Objects;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -60,6 +62,30 @@ public class NewMovieDTO {
 
 	public void setRuntime(int runtime) {
 		this.runtime = runtime;
+	}
+
+	@Override
+	public String toString() {
+		return "NewMovieDTO [title=" + title + ", genre=" + genre + ", releaseYear=" + releaseYear + ", runtime="
+				+ runtime + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(genre, releaseYear, runtime, title);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		NewMovieDTO other = (NewMovieDTO) obj;
+		return Objects.equals(genre, other.genre) && Objects.equals(releaseYear, other.releaseYear)
+				&& runtime == other.runtime && Objects.equals(title, other.title);
 	}
 
 }
