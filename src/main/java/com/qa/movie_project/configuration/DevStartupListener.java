@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
@@ -14,7 +15,7 @@ import com.qa.movie_project.repo.ReviewRepo;
 
 @Profile("dev")
 @Configuration
-public class DevStartupListener {
+public class DevStartupListener implements ApplicationListener<ApplicationReadyEvent> {
 
 	private MovieRepo movieRepo;
 	private ReviewRepo reviewRepo;
