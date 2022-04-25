@@ -9,6 +9,7 @@ import javax.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import com.qa.movie_project.dto.NewReviewDTO;
 import com.qa.movie_project.dto.ReviewDTO;
 import com.qa.movie_project.entity.Review;
 import com.qa.movie_project.repo.ReviewRepo;
@@ -56,6 +57,12 @@ public class ReviewService {
 			return this.toDTO(review.get());
 		}
 		throw new EntityNotFoundException("Review not found with id " + id);
+	}
+
+	public ReviewDTO createReview(NewReviewDTO review) {
+		Review toSave = this.modelMapper.map(review, Review.class);
+		Review newReview = reviewRepo.save(toSave);
+		return this.toDTO(newReview);
 	}
 
 }
