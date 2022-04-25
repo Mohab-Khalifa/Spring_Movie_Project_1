@@ -2,15 +2,21 @@ package com.qa.movie_project.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.qa.movie_project.dto.MovieDTO;
+import com.qa.movie_project.dto.NewMovieDTO;
 import com.qa.movie_project.dto.ReviewDTO;
 import com.qa.movie_project.service.MovieService;
 
@@ -43,6 +49,17 @@ public class MovieController {
 	@GetMapping(path = "/{id}/reviews")
 	public ResponseEntity<List<ReviewDTO>> getMovieReviews(@PathVariable(name = "id") int movieId) {
 		return ResponseEntity.ok(movieService.getMovieReviews(movieId));
+	}
+
+	//
+	@PostMapping
+	public ResponseEntity<MovieDTO> createMovie(@Valid @RequestBody NewMovieDTO movie) {
+		MovieDTO newMovie = movieService.createMovie(movie);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Location", "http://localhost:8080/movie/" + newMovie.getId());
+
+		return new ResponseEntity<>(newMovie, headers, HttpStatus.CREATED);
 	}
 
 }
