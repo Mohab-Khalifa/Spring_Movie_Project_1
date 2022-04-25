@@ -73,4 +73,12 @@ public class MovieService {
 		}
 		throw new EntityNotFoundException("Movie not found with id " + id);
 	}
+
+	public boolean deleteMovie(int id) {
+		if (movieRepo.existsById(id)) {
+			movieRepo.deleteById(id);
+			return !this.movieRepo.existsById(id);
+		}
+		throw new EntityNotFoundException("Movie not found with id " + id);
+	}
 }
