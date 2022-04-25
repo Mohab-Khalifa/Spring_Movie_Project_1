@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.qa.movie_project.dto.MovieDTO;
+import com.qa.movie_project.dto.NewMovieDTO;
 import com.qa.movie_project.entity.Movie;
 import com.qa.movie_project.repo.MovieRepo;
 
@@ -50,5 +51,11 @@ public class MovieService {
 			return this.toDTO(movie.get());
 		}
 		throw new EntityNotFoundException("Movie not found with id " + id);
+	}
+
+	public MovieDTO createMovie(NewMovieDTO movie) {
+		Movie toSave = this.modelMapper.map(movie, Movie.class);
+		Movie newMovie = movieRepo.save(toSave);
+		return this.toDTO(newMovie);
 	}
 }
