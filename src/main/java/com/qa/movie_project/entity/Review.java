@@ -40,4 +40,40 @@ public class Review {
 	@JoinColumn(name = "movie_id", referencedColumnName = "id")
 	private Movie movie;
 
+	public Review() {
+		super();
+		this.postedAt = LocalDate.now();
+	}
+
+	public Review(int rating, String comment) {
+		super();
+		this.rating = rating;
+		this.comment = comment;
+		this.postedAt = LocalDate.now();
+	}
+
+	public Review(int id, int rating, String comment) {
+		super();
+		this.id = id;
+		this.rating = rating;
+		this.comment = comment;
+		this.postedAt = LocalDate.now();
+	}
+
+	public Review(int rating, String comment, Movie movie) {
+		super();
+		this.rating = rating;
+		this.comment = comment;
+		this.movie = movie;
+		this.postedAt = LocalDate.now();
+	}
+
+	public Review(int id, int rating, String comment, Movie movie) {
+		super();
+		this.id = id;
+		this.rating = rating;
+		this.comment = comment;
+		this.postedAt = LocalDate.now();
+	}
+
 }
