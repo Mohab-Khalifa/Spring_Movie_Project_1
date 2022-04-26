@@ -119,7 +119,8 @@ public class Review {
 
 	@Override
 	public String toString() {
-		return "Review [id=" + id + ", rating=" + rating + ", comment=" + comment + "]";
+		return "Review [id=" + id + ", rating=" + rating + ", comment=" + comment + ", postedAt=" + postedAt
+				+ ", movie=" + movie + "]";
 	}
 
 	@Override
