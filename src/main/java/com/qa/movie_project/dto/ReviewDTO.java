@@ -11,7 +11,7 @@ public class ReviewDTO {
 
 	private String comment;
 
-	private MovieDTO movieDTO;
+	private MovieDTO movie;
 
 	private LocalDate postedAt;
 
@@ -19,12 +19,12 @@ public class ReviewDTO {
 
 	}
 
-	public ReviewDTO(int id, int rating, String comment, MovieDTO movieDTO, LocalDate postedAt) {
+	public ReviewDTO(int id, MovieDTO movie, int rating, String comment, LocalDate postedAt) {
 		super();
 		this.id = id;
+		this.movie = movie;
 		this.rating = rating;
 		this.comment = comment;
-		this.movieDTO = movieDTO;
 		this.postedAt = postedAt;
 	}
 
@@ -34,6 +34,14 @@ public class ReviewDTO {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public MovieDTO getMovie() {
+		return movie;
+	}
+
+	public void setMovie(MovieDTO movie) {
+		this.movie = movie;
 	}
 
 	public int getRating() {
@@ -52,14 +60,6 @@ public class ReviewDTO {
 		this.comment = comment;
 	}
 
-	public MovieDTO getMovieDTO() {
-		return movieDTO;
-	}
-
-	public void setMovieDTO(MovieDTO movieDTO) {
-		this.movieDTO = movieDTO;
-	}
-
 	public LocalDate getPostedAt() {
 		return postedAt;
 	}
@@ -70,13 +70,13 @@ public class ReviewDTO {
 
 	@Override
 	public String toString() {
-		return "ReviewDTO [id=" + id + ", rating=" + rating + ", comment=" + comment + ", movieDTO=" + movieDTO
+		return "ReviewDTO [id=" + id + ", rating=" + rating + ", comment=" + comment + ", movie=" + movie
 				+ ", postedAt=" + postedAt + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(comment, id, movieDTO, postedAt, rating);
+		return Objects.hash(comment, id, movie, postedAt, rating);
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class ReviewDTO {
 		if (getClass() != obj.getClass())
 			return false;
 		ReviewDTO other = (ReviewDTO) obj;
-		return Objects.equals(comment, other.comment) && id == other.id && Objects.equals(movieDTO, other.movieDTO)
+		return Objects.equals(comment, other.comment) && id == other.id && Objects.equals(movie, other.movie)
 				&& Objects.equals(postedAt, other.postedAt) && Objects.equals(rating, other.rating);
 	}
 
