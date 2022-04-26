@@ -101,6 +101,22 @@ public class Review {
 		this.comment = comment;
 	}
 
+	public LocalDate getPostedAt() {
+		return postedAt;
+	}
+
+	public void setPostedAt(LocalDate postedAt) {
+		this.postedAt = postedAt;
+	}
+
+	public Movie getMovie() {
+		return movie;
+	}
+
+	public void setMovie(Movie movie) {
+		this.movie = movie;
+	}
+
 	@Override
 	public String toString() {
 		return "Review [id=" + id + ", rating=" + rating + ", comment=" + comment + "]";
