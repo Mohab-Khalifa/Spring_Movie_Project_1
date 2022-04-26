@@ -19,11 +19,13 @@ public class ReviewDTO {
 
 	}
 
-	public ReviewDTO(int id, int rating, String comment) {
+	public ReviewDTO(int id, int rating, String comment, MovieDTO movieDTO, LocalDate postedAt) {
 		super();
 		this.id = id;
 		this.rating = rating;
 		this.comment = comment;
+		this.movieDTO = movieDTO;
+		this.postedAt = postedAt;
 	}
 
 	public int getId() {
