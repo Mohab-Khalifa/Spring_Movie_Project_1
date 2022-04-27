@@ -1,8 +1,13 @@
 package com.qa.movie_project.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -34,6 +39,21 @@ public class MovieServiceUnitTest {
 				new Movie(1, "Toy Story", "Animation", 1995, 81));
 		movieDTOs = List.of(new MovieDTO(1, "Interstellar", "Thriller", 2014, 169),
 				new MovieDTO(2, "Toy Story", "Animation", 1995, 81));
+	}
+
+	@Test
+	public void getAllTest() {
+
+		when(movieRepo.findAll()).thenReturn(movies);
+		when(modelMapper.map(movies.get(0), MovieDTO.class)).thenReturn(movieDTOs.get(0));
+		when(modelMapper.map(movies.get(1), MovieDTO.class)).thenReturn(movieDTOs.get(1));
+
+		List<MovieDTO> actual = movieService.getMovies();
+
+		assertEquals(movieDTOs, actual);
+		verify(movieRepo).findAll();
+		verify(modelMapper).map(movies.get(0), MovieDTO.class);
+		verify(modelMapper).map(movies.get(1), MovieDTO.class);
 	}
 
 }
