@@ -7,6 +7,9 @@ import static org.mockito.Mockito.when;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -76,6 +79,23 @@ public class MovieServiceUnitTest {
 		assertEquals(movieDTO, actual);
 		verify(movieRepo).findById(id);
 		verify(modelMapper).map(movie, MovieDTO.class);
+	}
+
+	@Test
+	public void getByInvalidIdTest() {
+		// Arrange
+		int id = 67;
+		when(movieRepo.findById(id)).thenReturn(Optional.empty());
+
+		// Act
+		EntityNotFoundException exception = Assertions.assertThrows(EntityNotFoundException.class, () -> {
+			movieService.getMovie(id);
+		});
+
+		// Assert
+		String expectedMessage = "Movie not found with id " + id;
+		assertEquals(expectedMessage, exception.getMessage());
+		verify(movieRepo).findById(id);
 	}
 
 }
