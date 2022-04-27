@@ -86,7 +86,7 @@ public class MovieService {
 	public List<ReviewDTO> getMovieReviews(int movieId) {
 		MovieDTO movie = this.getMovie(movieId);
 		List<ReviewDTO> reviews = reviewService.getReviewsByMovieId(movieId);
-		reviews.forEach(review -> review.setMovieDTO(movie));
+		reviews.forEach(review -> review.setMovie(movie));
 		return reviews;
 	}
 }
