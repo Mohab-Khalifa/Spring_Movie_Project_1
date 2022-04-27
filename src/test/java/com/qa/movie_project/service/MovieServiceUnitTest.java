@@ -19,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
 import com.qa.movie_project.dto.MovieDTO;
+import com.qa.movie_project.dto.NewMovieDTO;
 import com.qa.movie_project.entity.Movie;
 import com.qa.movie_project.repo.MovieRepo;
 
@@ -96,6 +97,34 @@ public class MovieServiceUnitTest {
 		String expectedMessage = "Movie not found with id " + id;
 		assertEquals(expectedMessage, exception.getMessage());
 		verify(movieRepo).findById(id);
+	}
+
+	@Test
+	public void createTest() {
+		// Arrange
+		Movie movie = movies.get(0);
+
+		NewMovieDTO movieDTO = new NewMovieDTO();
+		movieDTO.setTitle(movie.getTitle());
+		movieDTO.setGenre(movie.getGenre());
+		movieDTO.setReleaseYear(movie.getReleaseYear());
+		movieDTO.setRuntime(movie.getRuntime());
+
+		MovieDTO newMovie = new MovieDTO(movie.getId(), movie.getTitle(), movie.getGenre(), movie.getReleaseYear(),
+				movie.getRuntime());
+
+		when(modelMapper.map(movieDTO, Movie.class)).thenReturn(movie);
+		when(movieRepo.save(movie)).thenReturn(movie);
+		when(modelMapper.map(movie, MovieDTO.class)).thenReturn(newMovie);
+
+		// Act
+		MovieDTO actual = movieService.createMovie(movieDTO);
+
+		// Assert
+		assertEquals(newMovie, actual);
+		verify(modelMapper).map(movieDTO, Movie.class);
+		verify(movieRepo).save(movie);
+		verify(modelMapper).map(movie, MovieDTO.class);
 	}
 
 }
