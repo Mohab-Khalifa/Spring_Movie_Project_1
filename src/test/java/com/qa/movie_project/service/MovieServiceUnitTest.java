@@ -127,4 +127,29 @@ public class MovieServiceUnitTest {
 		verify(modelMapper).map(movie, MovieDTO.class);
 	}
 
+	@Test
+	public void updateTest() {
+
+		Movie movie = movies.get(0);
+		int id = movie.getId();
+		NewMovieDTO newMovieDTO = new NewMovieDTO(movie.getTitle(), movie.getGenre(), movie.getReleaseYear(),
+				movie.getRuntime());
+		MovieDTO expected = new MovieDTO(movie.getId(), movie.getTitle(), movie.getGenre(), movie.getReleaseYear(),
+				movie.getRuntime());
+
+		when(movieRepo.existsById(id)).thenReturn(true);
+		when(movieRepo.getById(id)).thenReturn(movie);
+		when(movieRepo.save(movie)).thenReturn(movie);
+		when(modelMapper.map(movie, MovieDTO.class)).thenReturn(expected);
+
+		MovieDTO updated = movieService.updateMovie(newMovieDTO, id);
+
+		assertEquals(expected, updated);
+		verify(movieRepo).existsById(id);
+		verify(movieRepo).getById(id);
+		verify(movieRepo).save(movie);
+		verify(modelMapper).map(movie, MovieDTO.class);
+
+	}
+
 }
