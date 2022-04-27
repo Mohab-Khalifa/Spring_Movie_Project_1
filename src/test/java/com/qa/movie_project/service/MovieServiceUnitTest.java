@@ -5,6 +5,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,17 +44,38 @@ public class MovieServiceUnitTest {
 
 	@Test
 	public void getAllTest() {
-
+		// Arrange
 		when(movieRepo.findAll()).thenReturn(movies);
 		when(modelMapper.map(movies.get(0), MovieDTO.class)).thenReturn(movieDTOs.get(0));
 		when(modelMapper.map(movies.get(1), MovieDTO.class)).thenReturn(movieDTOs.get(1));
 
+		// Act
 		List<MovieDTO> actual = movieService.getMovies();
 
+		// Assert
 		assertEquals(movieDTOs, actual);
 		verify(movieRepo).findAll();
 		verify(modelMapper).map(movies.get(0), MovieDTO.class);
 		verify(modelMapper).map(movies.get(1), MovieDTO.class);
+	}
+
+	@Test
+	public void getByIdTest() {
+		// Arrange
+		Movie movie = movies.get(0);
+		MovieDTO movieDTO = movieDTOs.get(0);
+		int id = movie.getId();
+
+		when(movieRepo.findById(id)).thenReturn(Optional.of(movie));
+		when(modelMapper.map(movie, MovieDTO.class)).thenReturn(movieDTO);
+
+		// Act
+		MovieDTO actual = movieService.getMovie(id);
+
+		// Assert
+		assertEquals(movieDTO, actual);
+		verify(movieRepo).findById(id);
+		verify(modelMapper).map(movie, MovieDTO.class);
 	}
 
 }
