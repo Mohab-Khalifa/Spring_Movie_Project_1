@@ -7,6 +7,9 @@ import static org.mockito.Mockito.when;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -86,6 +89,23 @@ public class ReviewServiceUnitTest {
 		assertEquals(reviewDTO, actual);
 		verify(reviewRepo).findById(id);
 		verify(modelMapper).map(review, ReviewDTO.class);
+	}
+
+	@Test
+	public void getByInvalidIdTest() {
+		// Arrange
+		int id = 5643;
+		when(reviewRepo.findById(id)).thenReturn(Optional.empty());
+
+		// Act
+		EntityNotFoundException exception = Assertions.assertThrows(EntityNotFoundException.class, () -> {
+			reviewService.getReview(id);
+		});
+
+		// Assert
+		String expectedMessage = "Review not found with id " + id;
+		assertEquals(expectedMessage, exception.getMessage());
+		verify(reviewRepo).findById(id);
 	}
 
 }
