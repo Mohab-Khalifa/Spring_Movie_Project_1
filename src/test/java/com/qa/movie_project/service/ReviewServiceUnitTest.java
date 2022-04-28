@@ -136,6 +136,7 @@ public class ReviewServiceUnitTest {
 		verify(modelMapper).map(review, ReviewDTO.class);
 	}
 
+	@Test
 	public void updateTest() {
 
 		Review review = reviews.get(0);
