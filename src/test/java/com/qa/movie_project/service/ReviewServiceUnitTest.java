@@ -5,6 +5,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -66,6 +67,25 @@ public class ReviewServiceUnitTest {
 		verify(reviewRepo).findAll();
 		verify(modelMapper).map(reviews.get(0), ReviewDTO.class);
 		verify(modelMapper).map(reviews.get(1), ReviewDTO.class);
+	}
+
+	@Test
+	public void getByIdTest() {
+		// Arrange
+		Review review = reviews.get(0);
+		ReviewDTO reviewDTO = reviewDTOs.get(0);
+		int id = review.getId();
+
+		when(reviewRepo.findById(id)).thenReturn(Optional.of(review));
+		when(modelMapper.map(review, ReviewDTO.class)).thenReturn(reviewDTO);
+
+		// Act
+		ReviewDTO actual = reviewService.getReview(id);
+
+		// Assert
+		assertEquals(reviewDTO, actual);
+		verify(reviewRepo).findById(id);
+		verify(modelMapper).map(review, ReviewDTO.class);
 	}
 
 }
