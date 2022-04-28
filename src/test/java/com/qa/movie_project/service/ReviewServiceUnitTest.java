@@ -19,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
 import com.qa.movie_project.dto.MovieDTO;
+import com.qa.movie_project.dto.NewReviewDTO;
 import com.qa.movie_project.dto.ReviewDTO;
 import com.qa.movie_project.entity.Movie;
 import com.qa.movie_project.entity.Review;
@@ -106,6 +107,32 @@ public class ReviewServiceUnitTest {
 		String expectedMessage = "Review not found with id " + id;
 		assertEquals(expectedMessage, exception.getMessage());
 		verify(reviewRepo).findById(id);
+	}
+
+	@Test
+	public void createTest() {
+		// Arrange
+		MovieDTO movieDTO = movieDTOs.get(0);
+		Review review = reviews.get(0);
+		Review newReview = new Review(review.getRating(), review.getComment(), review.getMovie());
+		ReviewDTO expected = reviewDTOs.get(0);
+
+		NewReviewDTO reviewDTO = new NewReviewDTO(review.getRating(), review.getComment());
+		ReviewDTO createdReviewDTO = new ReviewDTO(review.getId(), review.getRating(), review.getComment(), movieDTO,
+				review.getPostedAt());
+
+		when(modelMapper.map(reviewDTO, Review.class)).thenReturn(newReview);
+		when(reviewRepo.save(newReview)).thenReturn(review);
+		when(modelMapper.map(review, ReviewDTO.class)).thenReturn(createdReviewDTO);
+
+		// Act
+		ReviewDTO actual = reviewService.createReview(reviewDTO);
+
+		// Assert
+		assertEquals(expected, actual);
+		verify(modelMapper).map(reviewDTO, Review.class);
+		verify(reviewRepo).save(newReview);
+		verify(modelMapper).map(review, ReviewDTO.class);
 	}
 
 }
