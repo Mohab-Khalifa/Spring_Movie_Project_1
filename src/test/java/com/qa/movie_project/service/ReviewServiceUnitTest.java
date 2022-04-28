@@ -21,6 +21,7 @@ import org.modelmapper.ModelMapper;
 import com.qa.movie_project.dto.MovieDTO;
 import com.qa.movie_project.dto.NewReviewDTO;
 import com.qa.movie_project.dto.ReviewDTO;
+import com.qa.movie_project.dto.UpdateReviewDTO;
 import com.qa.movie_project.entity.Movie;
 import com.qa.movie_project.entity.Review;
 import com.qa.movie_project.repo.ReviewRepo;
@@ -133,6 +134,31 @@ public class ReviewServiceUnitTest {
 		verify(modelMapper).map(reviewDTO, Review.class);
 		verify(reviewRepo).save(newReview);
 		verify(modelMapper).map(review, ReviewDTO.class);
+	}
+
+	public void updateTest() {
+
+		Review review = reviews.get(0);
+		int id = review.getId();
+		UpdateReviewDTO newReviewDTO = new UpdateReviewDTO(review.getRating(), review.getComment());
+		MovieDTO movieDTO = movieDTOs.get(0);
+
+		ReviewDTO expected = new ReviewDTO(review.getId(), review.getRating(), review.getComment(), movieDTO,
+				review.getPostedAt());
+
+		when(reviewRepo.existsById(id)).thenReturn(true);
+		when(reviewRepo.getById(id)).thenReturn(review);
+		when(reviewRepo.save(review)).thenReturn(review);
+		when(modelMapper.map(review, ReviewDTO.class)).thenReturn(expected);
+
+		ReviewDTO updated = reviewService.updateReview(newReviewDTO, id);
+
+		assertEquals(expected, updated);
+		verify(reviewRepo).existsById(id);
+		verify(reviewRepo).getById(id);
+		verify(reviewRepo).save(review);
+		verify(modelMapper.map(review, Review.class));
+
 	}
 
 }
