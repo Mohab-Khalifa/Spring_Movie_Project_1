@@ -93,7 +93,7 @@ public class MovieControllerSystemIntegrationTest {
 		String expectedBody = objectMapper.writeValueAsString(expectedMovie);
 		ResultMatcher statusMatcher = MockMvcResultMatchers.status().isCreated();
 		ResultMatcher locationMatcher = MockMvcResultMatchers.header().string("Location",
-				"http://localhost:8080/user/" + expectedMovie.getId());
+				"http://localhost:8080/movie/" + expectedMovie.getId());
 		ResultMatcher contentMatcher = MockMvcResultMatchers.content().json(expectedBody);
 
 		mockMvc.perform(request).andExpectAll(statusMatcher, locationMatcher, contentMatcher);
