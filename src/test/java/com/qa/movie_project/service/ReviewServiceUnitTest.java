@@ -1,8 +1,13 @@
 package com.qa.movie_project.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -43,6 +48,24 @@ public class ReviewServiceUnitTest {
 				new Review(1, 5, "Test comment 2", movies.get(0)));
 		reviewDTOs = List.of(new ReviewDTO(1, 9, "Test comment 1", movieDTOs.get(0), reviews.get(0).getPostedAt()),
 				new ReviewDTO(2, 5, "Test comment 2", movieDTOs.get(1), reviews.get(1).getPostedAt()));
+	}
+
+	@Test
+	public void getAllTest() {
+		// Arrange-Act-Assert
+		// Arrange: setup the data and components under test
+		when(reviewRepo.findAll()).thenReturn(reviews);
+		when(modelMapper.map(reviews.get(0), ReviewDTO.class)).thenReturn(reviewDTOs.get(0));
+		when(modelMapper.map(reviews.get(1), ReviewDTO.class)).thenReturn(reviewDTOs.get(1));
+
+		// Act: performing the action under test
+		List<ReviewDTO> actual = reviewService.getReviews();
+
+		// Assert: validate the action was successful
+		assertEquals(reviewDTOs, actual);
+		verify(reviewRepo).findAll();
+		verify(modelMapper).map(reviews.get(0), ReviewDTO.class);
+		verify(modelMapper).map(reviews.get(1), ReviewDTO.class);
 	}
 
 }
