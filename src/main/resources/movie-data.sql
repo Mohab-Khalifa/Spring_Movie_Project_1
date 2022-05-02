@@ -1,0 +1,1 @@
+INSERT INTO `movie`(`title`, `genre`, `release_year`, `runtime`) VALUES('Inception', 'Thriller', 2010, 148)
