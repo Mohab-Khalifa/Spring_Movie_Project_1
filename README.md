@@ -17,9 +17,6 @@
 		- [CRUD - Read](#crud---read)
 		- [CRUD - Update](#crud---update)
 		- [CRUD - Delete](#crud---delete)
-	- [Coverage Test Screenshot](#coverage-test-screenshot)
-- [Jira Board Link](#jira-board-link)
-
 
 ## Introduction
 
